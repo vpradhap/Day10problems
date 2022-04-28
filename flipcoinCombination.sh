@@ -1,6 +1,7 @@
 #!/bin/bash
 
 counter=0
+index=0
 total_heads=0
 total_tails=0
 total_first_comb=0
@@ -186,3 +187,54 @@ echo "Percentage of TTH Combination ="${triplet[seventh_per]}
 triplet[eigth_per]=$(echo $total_triplet_eigth_comb $FLIP | awk '{print ($1/$2)*100}')
 echo "Percentage of TTT Combination ="${triplet[eigth_per]}
 
+
+arr[((index))]=${singlet[h_per]}
+arr[((index++))]=${singlet[t_per]}
+arr[((index++))]=${doublet[first_per]}
+arr[((index++))]=${doublet[second_per]}
+arr[((index++))]=${doublet[third_per]}
+arr[((index++))]=${doublet[fourth_per]}
+arr[((index++))]=${triplet[first_per]}
+arr[((index++))]=${triplet[second_per]}
+arr[((index++))]=${triplet[third_per]}
+arr[((index++))]=${triplet[fourth_per]}
+arr[((index++))]=${triplet[fifth_per]}
+arr[((index++))]=${triplet[sixth_per]}
+arr[((index++))]=${triplet[seventh_per]}
+arr[((index++))]=${triplet[eigth_per]}
+
+echo ${arr[@]}
+
+
+for(( i=0; i<${#arr[@]}; i++ ))
+do
+	for (( j=i+1; j<${#arr[@]}; j++ ))
+	do
+		if [[ ${arr[j]} > ${arr[i]} ]]
+		then
+			temp=${arr[j]}
+			arr[$j]=${arr[i]}
+			arr[$i]=$temp
+		fi
+	done
+done
+
+echo ${arr[@]}
+max=${arr[0]}
+
+case $max in
+	${singlet[h_per]}) echo "Singlet Combination is Winner" ;;
+	${singlet[t_per]}) echo "Singlet Combination is Winner" ;;
+	${doublet[first_per]}) echo "Doublet Combination is Winner" ;;
+	${doublet[second_per]}) echo "Doublet Combination is Winner" ;;
+	${doublet[third_per]}) echo "Doublet Combination is Winner" ;;
+	${doublet[fourth_per]}) echo "Doublet Combination is Winner"  ;;
+	${triplet[first_per]}) echo "Triplet Combination is Winner"  ;;
+	${triplet[second_per]}) echo "Triplet Combination is Winner" ;;
+	${triplet[third_per]}) echo "Triplet Combination is Winner" ;;
+	${triplet[fourth_per]}) echo "Triplet Combination is Winner" ;;
+	${triplet[fifth_per]}) echo "Triplet Combination is Winner" ;;
+	${triplet[sixth_per]}) echo "Triplet Combination is Winner" ;;
+	${triplet[seventh_per]}) echo "Triplet Combination is Winner" ;;
+	${triplet[eigth_per]}) echo "Triplet Combination is Winner" ;;
+esac
